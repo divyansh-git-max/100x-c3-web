@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(''); // your cluster url
 
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
+
+
+async function connectDB(){
+    await mongoose.connect(''); // your cluster url
+    console.log('DB connected');
+}
 
 const User = new Schema({
     username: { type: String, unique: true },
@@ -23,5 +28,6 @@ const TodoModel = mongoose.model('todos', Todo);
 
 module.exports = {
     UserModel,
-    TodoModel
+    TodoModel,
+    connectDB
 }
