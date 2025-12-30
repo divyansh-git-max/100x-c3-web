@@ -18,11 +18,19 @@ const User = new Schema({
 const Todo = new Schema({
     text: String,
     done: Boolean,
-    userId: { type: ObjectId, ref: 'User' }
+    userId: { type: ObjectId, ref: 'User' },
+    finishedAt: { type: Date , default: null },
+    createdAt: { 
+        type: Date, 
+        default: () => {
+            const now = new Date();
+            return new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
+        }
+    }
 });
 
 
-const UserModel = mongoose.model('user', User);
+const UserModel = mongoose.model('users', User);
 const TodoModel = mongoose.model('todos', Todo);
 
 
