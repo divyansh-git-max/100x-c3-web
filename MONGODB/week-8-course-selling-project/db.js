@@ -9,6 +9,10 @@ const userSchema = new Schema({
     password: String,
     firstName: String,
     lastName: String,
+    purchasedCourses: [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: "course"
+    }]
 });
 
 const adminSchema = new Schema({
