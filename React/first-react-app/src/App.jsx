@@ -1,32 +1,79 @@
 import './App.css'
+import { PostComponent } from './Post';
+import { useState } from 'react';
+import { ProfileCard } from './ProfileCard';
+import { NavComponent } from './navbar';
 
 function App() {
+  const [posts, setPosts] = useState([]);
+  function addPost() {
+    if (posts.length < 5) {
+      posts.push({
+        Name: "John Doe",
+        time: "1 day ago",
+        subtitle: "1000 followers",
+        image: "https://appx-wsb-gcp-mcdn.akamai.net.in/subject/2023-01-17-0.17044360120951185.jpg"
+      })
+      setPosts([...posts])
+    } else {
+      alert("You can't add more than 5 posts")
+    }
+  }
+
+  const PostComponents = posts.map(post =>
+    <PostComponent Name={post.Name}
+      time={post.time}
+      subtitle={post.subtitle}
+      image={post.image}
+    />
+  )
+
 
   return (
     <div style={{ backgroundColor: "#dfe6e9", height: "100vh" }}>
+      <div>
+        <NavComponent />
+      </div>
       <div style={{
         display: "flex",
         justifyContent: "flex-start",
         alignItems: "flex-start",
       }}>
-        <div style={{ display: "flex", justifyContent: "center", }}>
-          <ProfileCard />
+        <div>
+          <div style={{ display: "flex", justifyContent: "center", }}>
+            <ProfileCard />
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", }}>
+            <button onClick={addPost} style={{
+              backgroundColor: "#0984e3",
+              color: "white",
+              border: "none",
+              borderRadius: 8,
+              padding: "12px 24px",
+              fontSize: 16,
+              fontWeight: "600",
+              cursor: "pointer",
+              boxShadow: "0 2px 8px rgba(9, 132, 227, 0.3)",
+              transition: "all 0.3s ease",
+            }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "#0770c7";
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = "0 4px 12px rgba(9, 132, 227, 0.4)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = "#0984e3";
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "0 2px 8px rgba(9, 132, 227, 0.3)";
+              }}
+            >Add Post</button>
+          </div>
         </div>
         <div>
           <div>
-            <PostComponent />
-          </div>
-          <div>
-            <PostComponent />
-          </div>
-          <div>
-            <PostComponent />
-          </div>
-          <div>
-            <PostComponent />
-          </div>
-          <div>
-            <PostComponent />
+            {posts.length > 0 ? PostComponents : <div style={{
+              fontSize: "20px", color: "gray", margin: "20px", padding: "20px",
+            }}>No posts</div>}
           </div>
         </div>
       </div>
@@ -34,94 +81,6 @@ function App() {
   )
 }
 
-const style = {
-  width: 250,
-  backgroundColor: "white",
-  borderRadius: 10,
-  borderColor: "gray",
-  borderWidth: 1,
-  padding: 20,
-  margin: 10
-}
-
-const profileCardStyle = {
-  width: 250,
-  height: 250,
-  backgroundColor: "white",
-  borderRadius: 10,
-  borderColor: "gray",
-  borderWidth: 1,
-  margin: 10
-}
-
-
-function PostComponent() {
-  return <div style={style}>
-    <div style={{
-      display: "flex",
-      justifyContent: "space-around"
-    }}>
-      <img src={"https://appx-wsb-gcp-mcdn.akamai.net.in/subject/2023-01-17-0.17044360120951185.jpg"}
-        style={{
-          width: 50,
-          height: 50,
-          borderRadius: 50
-        }}
-      />
-      <div style={{ fontsize: 14, marginLeft: 10 }}>
-        <b>100xdevs</b>
-        <div>23,888 followers</div>
-        <div>12m</div>
-      </div>
-    </div>
-    <div style={{ fontSize: 14, marginLeft: 10 }}>
-      What to know how to win big? Check out how these folks won $6000 in bounties.
-    </div>
-  </div>
-}
-
-
-function ProfileCard() {
-  return <div style={profileCardStyle}>
-
-    <div style={{ backgroundColor: "#74b9ff", width: "100%", height: 50, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}></div>
-    <div style={{
-      display: "flex",
-      justifyContent: "space-around"
-    }}>
-      <img src={"https://appx-wsb-gcp-mcdn.akamai.net.in/subject/2023-01-17-0.17044360120951185.jpg"}
-        style={{
-          width: 50,
-          height: 50,
-          borderRadius: 50,
-          zIndex: 1000,
-          position: "relative",
-          top: -25
-        }}
-      />
-    </div>
-    <div style={{ fontsize: 14, marginLeft: 10 }}>
-      <b>Harkirat Singh</b>
-      <br />
-      <div>Working with WebRTC</div>
-    </div>
-    <div>
-      <div style={{ backgroundColor: "#3b3e40ff", width: "100%", height: 1, marginTop: 20, marginBottom: 20 }}></div>
-      <div style={{
-        fontSize: 14, marginLeft: 10, display: "flex", justifyContent: "space-between", paddingLeft: 10, paddingRight: 10,
-        marginBottom: 10, marginTop: 10
-      }}>
-        <div>Profile Viewers</div>
-        <div>40,000</div>
-      </div>
-      <div style={{ fontSize: 14, marginLeft: 10, display: "flex", justifyContent: "space-between", paddingLeft: 10, paddingRight: 10 }}>
-        <div>Post Impressions</div>
-        <div>1300</div>
-      </div>
-    </div>
-  </div>
-
-}
 
 
 export default App
